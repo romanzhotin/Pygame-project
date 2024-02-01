@@ -522,6 +522,17 @@ def start_screen():
         clock.tick(FPS)
 
 
+def show_go_screen():
+    pygame.display.set_mode((800, 474))
+    screen.fill((0, 0, 0))
+    end_text = MySprite((0, 0), filename='data\image\end.png')
+    end_text.render()
+    pygame.display.flip()
+    waiting = True
+    while waiting:
+        clock.tick(FPS)
+
+
 start_screen()
 striker = 'player'
 
@@ -584,13 +595,17 @@ def main():
                 mix_dice_btn, end_turn_btn)'''
 
     running = True
+    game_over = False
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
 
+            if game_over:
+                show_go_screen()
+
             if enemy.get_hp() <= 0 or player.get_hp() <= 0:
-                main()
+                game_over = True
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
                     player.get_healtn(1)
